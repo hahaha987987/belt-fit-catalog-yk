@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="按宽度和周长查找砂带机型，核对规格来源和待核实项。">
+  <meta name="theme-color" content="#f4f6fa">
+  <title>砂带机型适配库</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#catalog">跳到机型查询</a>
+  <header class="header">
+    <div class="container header-inner">
+      <a class="identity" href="./" aria-label="砂带适配库首页">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+        <span>砂带适配库</span>
+      </a>
+      <nav aria-label="主导航">
+        <button type="button" data-view="catalog" aria-current="page">机型查询</button>
+        <button type="button" data-view="pending">核实清单<span id="nav-pending" class="nav-count"></span></button>
+      </nav>
+      <span class="private"><span class="icon icon-lock" aria-hidden="true"></span>仅自己可见</span>
+    </div>
+  </header>
+
+  <main class="container" id="catalog">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-body">
+        <h1 id="page-title">砂带机型适配库</h1>
+        <p>按宽度和周长查找适配机型，逐条核对规格出处。</p>
+      </div>
+      <div class="hero-stats" aria-label="资料库统计">
+        <span><strong id="total-sizes"></strong> 个尺寸</span>
+        <span><strong id="total-confirmed"></strong> 条已确认</span>
+        <span><strong id="total-pending"></strong> 条待核实</span>
+      </div>
+    </section>
+
+    <div class="workspace">
+      <aside class="sidebar" aria-labelledby="size-heading">
+        <div class="sidebar-heading">
+          <h2 id="size-heading">砂带尺寸</h2>
+          <span class="unit">mm</span>
+        </div>
+        <form id="size-form" class="size-form" novalidate>
+          <label for="size-input" class="sr-only">输入砂带尺寸（宽度 × 周长，单位毫米）</label>
+          <div class="size-input-wrap">
+            <input id="size-input" type="text" placeholder="例如 13×457" maxlength="44" autocomplete="off" aria-describedby="size-hint size-error">
+            <button type="submit" aria-label="应用砂带尺寸"><span class="icon icon-search" aria-hidden="true"></span></button>
+          </div>
+          <p id="size-hint">宽度 × 周长</p>
+          <p id="size-error" class="input-error" role="alert" hidden></p>
+        </form>
+        <label class="sr-only" for="size-select">选择砂带尺寸</label>
+        <select id="size-select" class="mobile-size"></select>
+        <div id="size-buttons" class="size-buttons" aria-label="常用砂带尺寸"></div>
+        <details class="more-sizes">
+          <summary>更多尺寸</summary>
+          <div id="extra-sizes" class="size-buttons"></div>
+        </details>
+      </aside>
+
+      <section class="catalog-panel" aria-labelledby="results-title">
+        <div class="section-head">
+          <div>
+            <h2 id="results-title">适配机型</h2>
+            <p id="results-context"></p>
+          </div>
+          <button id="rules-button" class="rules-button" type="button"><span class="icon icon-info" aria-hidden="true">i</span>核实标准</button>
+        </div>
+        <div class="filters" aria-label="机型筛选">
+          <label class="model-search">
+            <span class="icon icon-search" aria-hidden="true"></span>
+            <span class="sr-only">搜索品牌或型号</span>
+            <input id="model-input" type="search" placeholder="搜索品牌或型号" maxlength="100" autocomplete="off">
+          </label>
+          <label><span class="sr-only">筛选品牌</span><select id="brand-filter"></select></label>
+          <label><span class="sr-only">筛选机型类型</span><select id="type-filter"></select></label>
+        </div>
+        <div class="result-tools">
+          <div class="status-buttons" id="status-buttons" aria-label="筛选核实状态"></div>
+          <button id="reset" class="reset" type="button" hidden>清除筛选</button>
+        </div>
+        <div id="results-count" class="result-count" role="status" aria-live="polite"></div>
+        <div id="results" class="results"></div>
+        <noscript>请启用 JavaScript 以使用尺寸和机型筛选。</noscript>
+      </section>
+    </div>
+  </main>
+
+  <footer class="container footer">
+    <span>砂带机型适配库</span>
+    <span>资料核对于 <time datetime="2026-11-20">2026-11-20</time></span>
+  </footer>
+
+  <dialog id="detail-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-inner">
+      <button class="dialog-close" type="button" aria-label="关闭详情" autofocus>×</button>
+      <div id="dialog-content"></div>
+    </div>
+  </dialog>
+  <template id="record-template">
+    <article class="record">
+      <div class="brand-tile" aria-hidden="true"></div>
+      <div class="record-content">
+        <div class="record-top">
+          <div>
+            <p class="record-brand"></p>
+            <h3 class="record-model"></h3>
+          </div>
+          <span class="status-badge"></span>
+        </div>
+        <div class="record-meta">
+          <span class="record-size"></span>
+          <span class="record-type"></span>
+          <span class="evidence-kind"></span>
+        </div>
+        <p class="record-summary"></p>
+        <button type="button" class="evidence-button"></button>
+      </div>
+    </article>
+  </template>
+</body>
+</html>
